@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Pokémon</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="menu">
+        <h3 class="pokedex-title" id="pokedexTitle">Pokedex =></h3>
+        <img src="pokeball.png" alt="Buscar Pokémon" class="search-icon" onclick="toggleSearch()">
+    </div>
+    <div id="infoBox" class="info-box">
+        <div>
+            <h3>Callback</h3>
+            <p>Un callback es una función pasada como argumento a otra función.</p>
+            <pre><code>function greeting(name) {
+    console.log('Hello ' + name);
+}
+
+function processUserInput(callback) {
+    const name = prompt('Please enter your name.');
+    callback(name);
+}
+
+processUserInput(greeting);</code></pre>
+        </div>
+        <div>
+            <h3>Promise</h3>
+            <p>Una promesa representa la eventual finalización (o falla) de una operación asincrónica.</p>
+            <pre><code>let promise = new Promise(function(resolve, reject) {
+    // realizar alguna operación asincrónica
+    setTimeout(() => resolve('Hecho!'), 1000);
+});
+
+promise.then(
+    result => console.log(result), // 'Hecho!'
+    error => console.log(error)
+);</code></pre>
+        </div>
+        <div>
+            <h3>Async</h3>
+            <p>La declaración <code>async</code> define una función asincrónica.</p>
+            <pre><code>async function example() {
+    let result = await someAsyncCall();
+    console.log(result);
+}</code></pre>
+        </div>
+        <div>
+            <h3>Await</h3>
+            <p>La expresión <code>await</code> se usa para esperar una promesa.</p>
+            <pre><code>async function example() {
+    let promise = new Promise((resolve, reject) => {
+        setTimeout(() => resolve('Hecho!'), 1000);
+    });
+
+    let result = await promise;
+    console.log(result); // 'Hecho!'
+}</code></pre>
+        </div>
+    </div>
+    <h1 id="title" class="title">Pokedex</h1>
+    <div id="searchContainer" class="search-container">
+        <button id="backButton" class="back-button" onclick="toggleSearch()">Regresar</button>
+        <input type="text" id="pokemonName" placeholder="Nombre del Pokémon">
+        <button onclick="buscarPokemon()">Buscar</button>
+    </div>
+    <div id="pokemonDataContainer">
+        <div id="pokemonData"></div>
+    </div>
+
+    <script>
+        async function buscarPokemon() {
+            const pokemonName = document.getElementById('pokemonName').value.toLowerCase();
+            const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error('No se encontró el Pokémon');
+                }
+                const data = await response.json();
+                mostrarPokemon(data);
+            } catch (error) {
+                console.error('Error al buscar el Pokémon:', error.message);
+                mostrarError(error.message);
+            }
+        }
+
+        function mostrarPokemon(pokemon) {
+            const pokemonDataContainer = document.getElementById('pokemonDataContainer');
+            const pokemonData = document.getElementById('pokemonData');
+            pokemonData.innerHTML = `
+                <h2>${pokemon.name.toUpperCase()}</h2>
+                <p><strong>ID:</strong> ${pokemon.id}</p>
+                <p><strong>Altura:</strong> ${pokemon.height / 10} m</p>
+                <p><strong>Peso:</strong> ${pokemon.weight / 10} kg</p>
+                <p><strong>Tipo(s):</strong> ${obtenerTipos(pokemon.types)}</p>
+                <img src="${pokemon.sprites.front_default}" alt="Imagen de ${pokemon.name}" class="pokemon-image">
+            `;
+            pokemonDataContainer.style.display = 'block';
+        }
+
+        function obtenerTipos(types) {
+            return types.map(type => type.type.name).join(', ');
+        }
+
+        function mostrarError(message) {
+            const pokemonDataContainer = document.getElementById('pokemonDataContainer');
+            const pokemonData = document.getElementById('pokemonData');
+            pokemonData.innerHTML = `<p>${message}</p>`;
+            pokemonDataContainer.style.display = 'block';
+        }
+
+        function toggleSearch() {
+            const searchContainer = document.getElementById('searchContainer');
+            const searchIcon = document.querySelector('.search-icon');
+            const title = document.getElementById('title');
+            const infoBox = document.getElementById('infoBox');
+            const backButton = document.getElementById('backButton');
+            const pokedexTitle = document.getElementById('pokedexTitle');
+            const pokemonDataContainer = document.getElementById('pokemonDataContainer');
+
+            if (searchContainer.style.display === 'none' || searchContainer.style.display === '') {
+                searchContainer.style.display = 'flex';
+                searchIcon.style.display = 'none';
+                title.style.display = 'block';
+                infoBox.style.display = 'none';
+                backButton.style.display = 'inline-block';
+                pokedexTitle.style.display = 'none';
+            } else {
+                searchContainer.style.display = 'none';
+                searchIcon.style.display = 'block';
+                title.style.display = 'none';
+                infoBox.style.display = 'flex';
+                backButton.style.display = 'none';
+                pokedexTitle.style.display = 'block';
+                pokemonDataContainer.style.display = 'none'; // Ocultar el contenedor de datos del Pokémon
+            }
+        }
+    </script>
+</body>
+</html>

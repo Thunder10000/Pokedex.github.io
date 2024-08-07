@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color: #2d2d2d;
+    color: #fff;
+    margin: 0;
+    background-image: url('pasto.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.pokemon-image {
+    max-width: 400px;
+    height: 300px;
+    margin-top: -3px;
+}
+
+.menu {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    text-align: left;
+}
+
+.search-icon {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
+
+.back-button, .search-container button {
+    display: inline-block;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #00bfff; /* Azul claro */
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+.back-button:hover, .search-container button:hover {
+    background-color: #87ceeb; /* Azul más claro */
+    box-shadow: 0 0 20px rgba(0, 191, 255, 1);
+}
+
+.search-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.search-container input {
+    padding: 10px;
+    font-size: 16px;
+    margin: 5px;
+    width: 150px; /* Reducido el ancho del input */
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.7);
+}
+
+.title {
+    display: none;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.info-box div {
+    background-color: #1a1a1a;
+    border: 2px solid #00bfff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.7);
+    padding: 20px;
+    width: 300px;
+    text-align: left;
+}
+
+.info-box div h3 {
+    margin-top: 0;
+    color: #00bfff;
+}
+
+pre {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+code {
+    color: #00ff2a;
+}
+
+.pokedex-title {
+    position: fixed;
+    top: 2px;
+    right: 70px;
+    font-size: 24px;
+    color: #ff0000;
+    display: block;
+}
+
+/* Nuevo estilo para el contenedor de datos del Pokémon */
+#pokemonDataContainer {
+    background-color: #ad0303;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.7);
+    padding: 20px;
+    margin-top: 20px;
+    width: 80%;
+    max-width: 390px;
+    margin: auto;
+    text-align: center; /* Centrar el texto */
+    display: none; /* Oculto por defecto */
+}
+
+#pokemonDataContainer h2 {
+    color: #000000;
+}
+
+/* Centrar el contenido */
+#pokemonData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
